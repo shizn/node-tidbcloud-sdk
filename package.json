@@ -1,0 +1,29 @@
+{
+    "name": "tidbcloud-sdk",
+    "version": "v1-beta",
+    "description": "NodeJS client for tidbcloud-sdk",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+    },
+    "main": "dist/api.js",
+    "types": "dist/api.d.ts",
+    "scripts": {
+        "clean": "rm -Rf node_modules/ *.js",
+        "build": "tsc",
+        "test": "npm run build && node dist/client.js"
+    },
+    "author": "OpenAPI-Generator Contributors",
+    "license": "Unlicense",
+    "dependencies": {
+        "bluebird": "^3.5.0",
+        "request": "^2.88.2",
+        "rewire": "^3.0.2"
+    },
+    "devDependencies": {
+        "@types/bluebird": "^3.5.33",
+        "@types/node": "^12.20.55",
+        "@types/request": "^2.48.8",
+        "typescript": "^4.0"
+    }
+}
