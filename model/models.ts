@@ -509,6 +509,11 @@ export class HttpDigestAuth implements Authentication {
     public username: string = '';
     public password: string = '';
 
+    constructor(username: string, password: string) {
+        this.username = username;
+        this.password = password;
+    }
+
     applyToRequest(requestOptions: localVarRequest.Options): void {
         requestOptions.auth = {
             username: this.username, password: this.password, sendImmediately:false

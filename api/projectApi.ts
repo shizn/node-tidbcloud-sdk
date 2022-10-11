@@ -36,25 +36,28 @@ export class ProjectApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
+    private username : string = '' ;
+    private password : string = '' ;
 
     protected authentications = {
-        'default': <Authentication>new HttpDigestAuth()
+        'default': <Authentication>new HttpDigestAuth(this.username, this.password)
     }
-
     protected interceptors: Interceptor[] = [];
 
-    constructor(basePath?: string);
-    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+    //constructor(basePath?: string);
+    constructor(username: string, password?: string, basePath?: string) {
         if (password) {
-            if (basePath) {
-                this.basePath = basePath;
+            if (username) {
+                this.password = password;
+                this.username = username;
+                this.authentications.default = new HttpDigestAuth(this.username, this.password);
             }
         } else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername
+            if (basePath) {
+                this.basePath = basePath
             }
         }
-    }
+    };
 
     set useQuerystring(value: boolean) {
         this._useQuerystring = value;
