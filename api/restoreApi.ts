@@ -22,7 +22,7 @@ import { ListProviderRegions400Response } from '../model/listProviderRegions400R
 import { ListProviderRegionsDefaultResponse } from '../model/listProviderRegionsDefaultResponse';
 import { ListRestoreResp } from '../model/listRestoreResp';
 
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
+import { ObjectSerializer, Authentication, HttpDigestAuth, Interceptor } from '../model/models';
 
 import { HttpError, RequestFile } from './apis';
 
@@ -39,25 +39,29 @@ export class RestoreApi {
     protected _basePath = defaultBasePath;
     protected _defaultHeaders : any = {};
     protected _useQuerystring : boolean = false;
+    private username : string = '' ;
+    private password : string = '' ;
 
     protected authentications = {
-        'default': <Authentication>new VoidAuth(),
+        'default': <Authentication>new HttpDigestAuth(this.username, this.password)
     }
 
     protected interceptors: Interceptor[] = [];
 
-    constructor(basePath?: string);
-    constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+    //constructor(basePath?: string);
+    constructor(username: string, password?: string, basePath?: string) {
         if (password) {
-            if (basePath) {
-                this.basePath = basePath;
+            if (username) {
+                this.password = password;
+                this.username = username;
+                this.authentications.default = new HttpDigestAuth(this.username, this.password);
             }
         } else {
-            if (basePathOrUsername) {
-                this.basePath = basePathOrUsername
+            if (basePath) {
+                this.basePath = basePath
             }
         }
-    }
+    };
 
     set useQuerystring(value: boolean) {
         this._useQuerystring = value;
